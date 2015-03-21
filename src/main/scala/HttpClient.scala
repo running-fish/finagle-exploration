@@ -9,7 +9,7 @@ import org.jboss.netty.handler.codec.http.HttpMethod._
 import org.jboss.netty.handler.codec.http.{DefaultHttpRequest, HttpResponse}
 
 object HttpClient {
-  val address = "localhost:10000"
+  val address = "localhost:10000,localhost:10001"
   def main(args: Array[String]): Unit = {
     val client = makeVanillaClient()
     val countdownHook = new AtomicInteger(20001)
