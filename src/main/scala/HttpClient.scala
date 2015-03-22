@@ -49,7 +49,7 @@ object HttpClient {
         logger.info("SuccessCount: %s".format(successCount.intValue()))
         logger.info("ErrorCount: %s".format(errorCount.intValue()))
         logger.info("")
-        logger.info(stats.summary())
+        logger.info(stats.summary)
         client.release()
       }
     }
@@ -59,10 +59,8 @@ object HttpClient {
     ClientBuilder()
       .codec(Http())
       .hosts(address)
-      .tcpConnectTimeout(Duration.fromSeconds(1))
       .hostConnectionLimit(1)
-      .reportHostStats(stats)
-      .logger(logger)
+      .reportTo(stats)
       .build()
   }
 
@@ -74,6 +72,7 @@ object HttpClient {
       .requestTimeout(Duration.fromMilliseconds(7000))
       .hostConnectionCoresize(10)
       .hostConnectionLimit(50)
+      .reportTo(stats)
       .build()
   }
 }
