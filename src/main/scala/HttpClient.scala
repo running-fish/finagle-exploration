@@ -1,8 +1,10 @@
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.logging.{Level, ConsoleHandler, Logger}
 
 import com.twitter.finagle.FailFastException
 import com.twitter.finagle.builder.ClientBuilder
 import com.twitter.finagle.http.Http
+import com.twitter.finagle.stats.{SummarizingStatsReceiver, JavaLoggerStatsReceiver}
 import com.twitter.util.{Duration, Future}
 import org.jboss.netty.handler.codec.http.HttpVersion._
 import org.jboss.netty.handler.codec.http.HttpMethod._
@@ -10,6 +12,10 @@ import org.jboss.netty.handler.codec.http.{DefaultHttpRequest, HttpResponse}
 
 object HttpClient {
   val address = "localhost:10000"
+  val logger = Logger.getLogger("client")
+  val stats = new SummarizingStatsReceiver()
+  logger.setLevel(Level.ALL)
+
   def main(args: Array[String]): Unit = {
     val client = makeVanillaClient()
     val countdownHook = new AtomicInteger(20001)
@@ -40,8 +46,10 @@ object HttpClient {
       }
 
       def shutdown(): Unit = {
-        println("SuccessCount: %s".format(successCount.intValue()))
-        println("ErrorCount: %s".format(errorCount.intValue()))
+        logger.info("SuccessCount: %s".format(successCount.intValue()))
+        logger.info("ErrorCount: %s".format(errorCount.intValue()))
+        logger.info("")
+        logger.info(stats.summary())
         client.release()
       }
     }
@@ -53,6 +61,8 @@ object HttpClient {
       .hosts(address)
       .tcpConnectTimeout(Duration.fromSeconds(1))
       .hostConnectionLimit(1)
+      .reportHostStats(stats)
+      .logger(logger)
       .build()
   }
 
