@@ -24,9 +24,14 @@ class HttpServer(port: Int = 10000) {
   val service: Service[HttpRequest, HttpResponse] = new Service[HttpRequest, HttpResponse] {
     def apply(req: HttpRequest) = {
       val currentCount = requestCount.getAndAdd(1)
+
       if (currentCount % 1000 == 0) {
         println("Server on port [%s] Receive count %s".format(port, currentCount))
+        if (req.getUri().equals("/hello")){
+          println("Hello from server...")
+        }
       }
+
       Future(new DefaultHttpResponse(req.getProtocolVersion, OK))
     }
   }

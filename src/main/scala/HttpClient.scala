@@ -30,7 +30,7 @@ object HttpClient {
     val countdownHook = new AtomicInteger(10000)
 
     Range(0, countdownHook.get()).foreach{i =>
-      val request = new DefaultHttpRequest(HTTP_1_1, GET, "/")
+      val request = new DefaultHttpRequest(HTTP_1_1, GET, "/hello")
       val responseFuture: Future[HttpResponse] = client(request)
       responseFuture.onSuccess {response =>
         val responseCount = countdownHook.decrementAndGet()
