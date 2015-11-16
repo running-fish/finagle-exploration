@@ -1,11 +1,11 @@
 This POC is the outcome of https://wiki.hq.tni01.com/display/~phivale/Explore+use+of+finagle+http+client
 
 
-This is a test-bed for carrying out experiments with finagle basics.
+This is a test-bed for carrying out experiments with finagle zookeeper cluster.
 
 There are two main classes:
-* HttpClient
-* HttpServer
+* HttpClient - Connects to a zookeeper cluster using zk client and discovers the service address. Disconnects the zk client and closes the client channel on completion.
+* HttpServer - Registers with a given zookeeper instance. The ip address and port number for the service are published in ZK.
 
 The HttpServer spins up two finagle services using the HTTP codec. These echo a request, emitting messages periodically to stdout.
 
@@ -21,8 +21,20 @@ This will prompt for selecting which main to run.
 
 Alternately, these can be run directly via sbt args:
 ```sh
+$ sbt compile
 $ sbt "run-main HttpServer"
-$ sbt "run-main HttpClient"
+
+Check zk. The service should be registered under services -> Fnagle-HttpServer. A host and port number should be exposed.
+sbt "run-main HttpClient"
+
+You should see something like below for the server : 
+Server on port [10000] Receive count 0
+Server on port [10000] Receive count 1000
+Server on port [10000] Receive count 2000
+
+You should see the below for client :
+(Received response from server ,DefaultHttpResponse(chunked: false)
+HTTP/1.1 200 OK Content-Length: 0)
 ```
 
 
