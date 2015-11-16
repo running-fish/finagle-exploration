@@ -1,3 +1,6 @@
+This POC is the outcome of https://wiki.hq.tni01.com/display/~phivale/Explore+use+of+finagle+http+client
+
+
 This is a test-bed for carrying out experiments with finagle basics.
 
 There are two main classes:
@@ -21,4 +24,5 @@ Alternately, these can be run directly via sbt args:
 $ sbt "run-main HttpServer"
 $ sbt "run-main HttpClient"
 ```
+
 

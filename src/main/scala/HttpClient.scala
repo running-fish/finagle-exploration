@@ -20,8 +20,10 @@ import scala.collection.JavaConverters._
 object HttpClient {
   val address = "localhost:10000"
   val logger = Logger.getLogger("client")
-  var cluster :ZookeeperServerSetCluster = null
-  var zkClient: ZooKeeperClient = null
+
+  var zkClient: ZooKeeperClient = getZkClient()
+  val cluster :ZookeeperServerSetCluster = createZkCluster
+
   val stats = new SummarizingStatsReceiver()
   logger.setLevel(Level.ALL)
 
@@ -56,7 +58,7 @@ object HttpClient {
         logger.info(stats.summary)
         if (client.status==Status.Open){
           println("Closing client connection...")
-          getZkClient().close()
+          zkClient.close()
           client.close(Duration.fromSeconds(15))
         }
       }
@@ -97,22 +99,21 @@ object HttpClient {
 
   }
 
+
   def createZkCluster(): ZookeeperServerSetCluster={
-    var zookeeperAddr = new InetSocketAddress("zk1", 2181)
-    val zkaddrlist: List[InetSocketAddress] = List(zookeeperAddr)
-    val timeout = Amount.of(10, Time.SECONDS)
     val path="/services/Finagle-HttpServer"
-
-    zkClient = new ZooKeeperClient(timeout,  zkaddrlist.asJava)
-
     val serverSet = new ServerSetImpl(zkClient, path)
-    cluster = new ZookeeperServerSetCluster(serverSet)
+    new ZookeeperServerSetCluster(serverSet)
 
-    cluster
   }
 
   def getZkClient():ZooKeeperClient  ={
-   zkClient
+    var zookeeperAddr = new InetSocketAddress("zk1", 2181)
+    val zkaddrlist: List[InetSocketAddress] = List(zookeeperAddr)
+    val timeout = Amount.of(10, Time.SECONDS)
+
+    zkClient = new ZooKeeperClient(timeout,  zkaddrlist.asJava)
+    zkClient
   }
 
 }
