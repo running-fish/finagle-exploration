@@ -15,6 +15,8 @@ import scala.collection.JavaConverters._
 object HttpServer {
   def main(args: Array[String]) {
     new HttpServer(10000)
+    new HttpServer(10001)
+    new HttpServer(10003)
    }
 }
 
