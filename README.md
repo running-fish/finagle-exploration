@@ -37,4 +37,6 @@ You should see the below for client :
 HTTP/1.1 200 OK Content-Length: 0)
 ```
 
-
+Next steps based on this POC
+https://wiki.hq.tni01.com/pages/viewpage.action?pageId=91425061
+https://jira.tendrilinc.com/browse/PAIIN-377
