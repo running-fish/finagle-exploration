@@ -1,5 +1,7 @@
 This is a test-bed for carrying out experiments with finagle basics.
 
+Different experiments are carried out in separate branches. To keep these experiments distict, these will not be merged to master. Exercise caution when cleaning out branches.
+
 There are two main classes:
 * HttpClient
 * HttpServer
