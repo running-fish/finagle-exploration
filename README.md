@@ -1,5 +1,6 @@
 This POC is the outcome of https://wiki.hq.tni01.com/display/~phivale/Explore+use+of+finagle+http+client
 
+Documentation for this approach can be found at https://wiki.hq.tni01.com/pages/viewpage.action?pageId=91425061
 
 This is a test-bed for carrying out experiments with finagle zookeeper cluster.
 
