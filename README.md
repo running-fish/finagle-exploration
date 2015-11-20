@@ -42,13 +42,15 @@ https://wiki.hq.tni01.com/pages/viewpage.action?pageId=91425061
 https://jira.tendrilinc.com/browse/PAIIN-377
 
 
+```sh
 Learning and Recommendations:-
-# The finagle/finatra artifact ID version (finagle-serversets_2.10) has to match the scala version. SBT throws exceptions if multiple library versions are pulled in.
+$ The finagle/finatra artifact ID version (finagle-serversets_2.10) has to match the scala version. SBT throws exceptions if multiple library versions are pulled in.
 
-# Currently the weather service Java code pulls in Netty version 3.8.x and 3.10.x. It is recommended to use the default version of Netty (3.10.x) that finagle pulls in.
+$ Currently the weather service Java code pulls in Netty version 3.8.x and 3.10.x. It is recommended to use the default version of Netty (3.10.x) that finagle pulls in.
 
-#To avoid "java.lang.InterruptedException" when the client shuts down, always close the established zookeeper client connection before closing the finagle client connection.
+$ To avoid "java.lang.InterruptedException" when the client shuts down, always close the established zookeeper client connection before closing the finagle client connection.
 
-#Assuming the team has consensus on the Finagle Zookeeper ServerSet approach for registering "HTTP" services, it is recommended to make this solution as standard for the platform.
-#Which means using it to register "RPC" services as well. This implies moving away from the current Tendril's "service-deps-registry" to Finagl's "Zookeeper Server Sets".
+$ Assuming the team has consensus on the Finagle Zookeeper ServerSet approach for registering "HTTP" services, it is recommended to make this solution as standard for the platform.
+$ Which means using it to register "RPC" services as well. This implies moving away from the current Tendril's "service-deps-registry" to Finagl's "Zookeeper Server Sets".
 
+```
