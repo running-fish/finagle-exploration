@@ -51,6 +51,6 @@ $ Currently the weather service Java code pulls in Netty version 3.8.x and 3.10.
 $ To avoid "java.lang.InterruptedException" when the client shuts down, always close the established zookeeper client connection before closing the finagle client connection.
 
 $ Assuming the team has consensus on the Finagle Zookeeper ServerSet approach for registering "HTTP" services, it is recommended to make this solution as standard for the platform.
-$ Which means using it to register "RPC" services as well. This implies moving away from the current Tendril's "service-deps-registry" to Finagl's "Zookeeper Server Sets".
+ Which means using it to register "RPC" services as well. This implies moving away from the current Tendril's "service-deps-registry" to Finagle's "Zookeeper Server Sets".
 
 ```
